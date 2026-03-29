@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concurrency Control Demo - Fresh Mart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .demo-box {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .unsafe {
+            border-left: 4px solid #dc3545;
+        }
+        .safe {
+            border-left: 4px solid #28a745;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6;
+        }
+        .timeline-item {
+            position: relative;
+            padding: 10px 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 15px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #007bff;
+            border: 2px solid white;
+        }
+        .user-a { color: #007bff; }
+        .user-b { color: #6610f2; }
+        .stock-negative { color: #dc3545; font-weight: bold; }
+        .stock-ok { color: #28a745; font-weight: bold; }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4"><i class="fa fa-shield"></i> Concurrency Control Implementation</h1>
+        
+        <div class="alert alert-info">
+            <strong><i class="fa fa-info-circle"></i> Scenario:</strong> 
+            Product stock = 1 unit. User A and User B both click "Buy" simultaneously.
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="demo-box unsafe">
+                    <h3><i class="fa fa-times-circle text-danger"></i> Without Transaction Control</h3>
+                    <p class="text-muted">Old implementation (UNSAFE)</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> Check stock → stock = 1 ✓
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> Check stock → stock = 1 ✓
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> Reduce stock → stock = 0
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> Reduce stock → <span class="stock-negative">stock = -1</span>
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> Create order ✓
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> Create order ✓
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-danger mt-3">
+                        <strong>Result:</strong> Both orders succeed!<br>
+                        <strong>Final Stock:</strong> <span class="stock-negative">-1</span><br>
+                        <strong>Problem:</strong> Overselling occurred - negative inventory
+                    </div>
+                    
+                    <h5 class="mt-3">Code Flow:</h5>
+                    <pre class="bg-light p-3"><code>// Step 1: Validate (no lock)
+if (validate_stock($id, $qty)) {
+    // Step 2: Reduce stock (separate)
+    reduce_stock($id, $qty);
+    
+    // Step 3: Create order (separate)
+    create_order($user_id);
+}</code></pre>
+                    <p class="text-danger"><strong>Issue:</strong> Steps are not atomic. Race condition between validation and stock reduction.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="demo-box safe">
+                    <h3><i class="fa fa-check-circle text-success"></i> With Transaction Control</h3>
+                    <p class="text-muted">New implementation (SAFE)</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> BEGIN TRANSACTION
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> SELECT ... FOR UPDATE (LOCKS)
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> BEGIN TRANSACTION
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> SELECT ... FOR UPDATE (WAITS...)
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> Check: stock = 1 ✓
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> UPDATE stock = 0
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> INSERT order
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-a">User A:</strong> COMMIT (releases lock)
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> Lock acquired! Check: stock = 0 ✗
+                        </div>
+                        <div class="timeline-item">
+                            <strong class="user-b">User B:</strong> ROLLBACK (insufficient stock)
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success mt-3">
+                        <strong>Result:</strong> Only User A's order succeeds!<br>
+                        <strong>Final Stock:</strong> <span class="stock-ok">0</span><br>
+                        <strong>User B:</strong> Gets "Out of Stock" error
+                    </div>
+                    
+                    <h5 class="mt-3">Code Flow:</h5>
+                    <pre class="bg-light p-3"><code>// START TRANSACTION
+mysqli_begin_transaction($con);
+
+// LOCK the product row
+SELECT ... FOR UPDATE;
+
+// Check stock INSIDE transaction
+if ($stock >= $qty) {
+    // Reduce stock
+    UPDATE products SET stock = stock - $qty;
+    
+    // Create order
+    INSERT INTO orders ...;
+    
+    // COMMIT (atomic)
+    mysqli_commit($con);
+} else {
+    // ROLLBACK
+    mysqli_rollback($con);
+    return error;
+}</code></pre>
+                    <p class="text-success"><strong>Solution:</strong> All operations are atomic. Lock prevents concurrent access.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-box">
+            <h3><i class="fa fa-database"></i> Technical Details</h3>
+            
+            <h5>SELECT ... FOR UPDATE</h5>
+            <p>This SQL clause acquires an <strong>exclusive lock</strong> on the selected rows:</p>
+            <ul>
+                <li>Other transactions trying to lock the same rows must wait</li>
+                <li>Lock is held until COMMIT or ROLLBACK</li>
+                <li>Prevents dirty reads and lost updates</li>
+                <li>Works only with InnoDB engine (which we use)</li>
+            </ul>
+            
+            <h5>Transaction Isolation</h5>
+            <p>MySQL default isolation level: <code>REPEATABLE READ</code></p>
+            <ul>
+                <li>Each transaction sees a consistent snapshot</li>
+                <li>Changes are invisible to other transactions until commit</li>
+                <li>Prevents phantom reads and non-repeatable reads</li>
+            </ul>
+            
+            <h5>Atomicity Guarantee</h5>
+            <p>All operations within the transaction are atomic:</p>
+            <ol>
+                <li>Lock product rows</li>
+                <li>Validate stock</li>
+                <li>Reduce stock</li>
+                <li>Create order record</li>
+                <li>Create order items</li>
+                <li>Update cart status</li>
+            </ol>
+            <p><strong>Either ALL succeed (COMMIT) or ALL fail (ROLLBACK)</strong></p>
+        </div>
+
+        <div class="demo-box">
+            <h3><i class="fa fa-flask"></i> Testing</h3>
+            <p>To test the implementation:</p>
+            <ol>
+                <li><a href="test_concurrency.php" class="btn btn-primary btn-sm">Run Automated Test</a> - Simulates concurrent orders</li>
+                <li><strong>Manual Test:</strong>
+                    <ul>
+                        <li>Set a product's stock to 1</li>
+                        <li>Open two browser sessions (different users)</li>
+                        <li>Add product to cart in both</li>
+                        <li>Click "Confirm Order" simultaneously</li>
+                        <li>Verify: One succeeds, one gets error, stock = 0</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="demo-box">
+            <h3><i class="fa fa-code"></i> Implementation Files</h3>
+            <ul>
+                <li><code>includes/common.php</code> - New function: <code>create_order_with_transaction()</code></li>
+                <li><code>success.php</code> - Updated to use transaction-based order placement</li>
+                <li><code>cart.php</code> - Enhanced error messages for stock issues</li>
+                <li><code>CONCURRENCY_CONTROL.md</code> - Complete documentation</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-success">
+            <h4><i class="fa fa-check-circle"></i> Implementation Complete</h4>
+            <p class="mb-0">Your e-commerce site now has production-grade concurrency control that prevents race conditions and ensures data integrity.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

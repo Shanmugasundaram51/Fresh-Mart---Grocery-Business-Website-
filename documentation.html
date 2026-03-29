@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Mart - Documentation Portal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .header h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        .doc-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .doc-card h3 {
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .doc-card h3 i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+        .doc-link {
+            display: block;
+            padding: 12px 15px;
+            background: #f9fafb;
+            border-left: 4px solid #667eea;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: all 0.3s;
+        }
+        .doc-link:hover {
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            padding-left: 25px;
+        }
+        .doc-link .badge {
+            float: right;
+        }
+        .priority-high {
+            border-left-color: #dc3545;
+        }
+        .priority-medium {
+            border-left-color: #ffc107;
+        }
+        .priority-low {
+            border-left-color: #28a745;
+        }
+        .role-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .role-customer {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .role-admin {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .role-developer {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .role-all {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        .quick-links {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .quick-links h2 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .quick-link-btn {
+            display: inline-block;
+            background: white;
+            color: #059669;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px;
+            transition: transform 0.3s;
+        }
+        .quick-link-btn:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+            color: #047857;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fa fa-book"></i> Fresh Mart Documentation Portal</h1>
+            <p>Complete documentation for your online grocery shopping system</p>
+            <div class="mt-3">
+                <span class="role-badge role-customer">Customer</span>
+                <span class="role-badge role-admin">Admin</span>
+                <span class="role-badge role-developer">Developer</span>
+                <span class="role-badge role-all">All Roles</span>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <h2><i class="fa fa-rocket"></i> Quick Access</h2>
+            <a href="index.php" class="quick-link-btn"><i class="fa fa-home"></i> Customer Site</a>
+            <a href="admin/" class="quick-link-btn"><i class="fa fa-lock"></i> Admin Panel</a>
+            <a href="test_concurrency.php" class="quick-link-btn"><i class="fa fa-flask"></i> Test Concurrency</a>
+            <a href="concurrency_demo.html" class="quick-link-btn"><i class="fa fa-eye"></i> View Demo</a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="doc-card">
+                    <h3><i class="fa fa-star"></i> Start Here</h3>
+                    <span class="role-badge role-all">All Roles</span>
+                    
+                    <a href="START_HERE.md" class="doc-link priority-high">
+                        <strong>START_HERE.md</strong>
+                        <span class="badge badge-danger">Must Read</span>
+                        <br><small>Your entry point - directs you to right docs</small>
+                    </a>
+                    
+                    <a href="QUICK_START_GUIDE.md" class="doc-link priority-high">
+                        <strong>QUICK_START_GUIDE.md</strong>
+                        <span class="badge badge-danger">10 min</span>
+                        <br><small>Get system running fast</small>
+                    </a>
+                    
+                    <a href="ONE_PAGE_REFERENCE.md" class="doc-link priority-high">
+                        <strong>ONE_PAGE_REFERENCE.md</strong>
+                        <span class="badge badge-warning">Print Me!</span>
+                        <br><small>Daily operations quick reference</small>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <h3><i class="fa fa-book"></i> Complete Manual</h3>
+                    <span class="role-badge role-all">All Roles</span>
+                    
+                    <a href="USER_MANUAL_SOP.md" class="doc-link priority-high">
+                        <strong>USER_MANUAL_SOP.md</strong>
+                        <span class="badge badge-primary">45KB</span>
+                        <br><small>Complete Standard Operating Procedure - 20 sections</small>
+                    </a>
+                    
+                    <a href="README.md" class="doc-link">
+                        <strong>README.md</strong>
+                        <span class="badge badge-info">Quick</span>
+                        <br><small>Project overview and features</small>
+                    </a>
+                    
+                    <a href="DOCUMENTATION_INDEX.md" class="doc-link">
+                        <strong>DOCUMENTATION_INDEX.md</strong>
+                        <span class="badge badge-info">Index</span>
+                        <br><small>Complete documentation map</small>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <h3><i class="fa fa-shield"></i> Concurrency Control</h3>
+                    <span class="role-badge role-developer">Developer</span>
+                    <span class="role-badge role-admin">Admin</span>
+                    
+                    <a href="CONCURRENCY_QUICK_REFERENCE.md" class="doc-link priority-high">
+                        <strong>CONCURRENCY_QUICK_REFERENCE.md</strong>
+                        <span class="badge badge-danger">Critical</span>
+                        <br><small>Quick reference for transaction logic</small>
+                    </a>
+                    
+                    <a href="CONCURRENCY_CONTROL.md" class="doc-link priority-high">
+                        <strong>CONCURRENCY_CONTROL.md</strong>
+                        <span class="badge badge-danger">Critical</span>
+                        <br><small>Complete technical implementation</small>
+                    </a>
+                    
+                    <a href="TRANSACTION_FLOW_DIAGRAM.md" class="doc-link priority-medium">
+                        <strong>TRANSACTION_FLOW_DIAGRAM.md</strong>
+                        <span class="badge badge-warning">Visual</span>
+                        <br><small>Flow diagrams and timelines</small>
+                    </a>
+                    
+                    <a href="concurrency_demo.html" class="doc-link priority-medium">
+                        <strong>concurrency_demo.html</strong>
+                        <span class="badge badge-success">Interactive</span>
+                        <br><small>Visual demonstration page</small>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="doc-card">
+                    <h3><i class="fa fa-user-shield"></i> Admin Documentation</h3>
+                    <span class="role-badge role-admin">Admin</span>
+                    
+                    <a href="ADMIN_SETUP_GUIDE.md" class="doc-link priority-high">
+                        <strong>ADMIN_SETUP_GUIDE.md</strong>
+                        <span class="badge badge-warning">Setup</span>
+                        <br><small>Admin panel installation guide</small>
+                    </a>
+                    
+                    <a href="ADMIN_TEST_FLOWS.md" class="doc-link priority-medium">
+                        <strong>ADMIN_TEST_FLOWS.md</strong>
+                        <span class="badge badge-info">Testing</span>
+                        <br><small>Complete test procedures</small>
+                    </a>
+                    
+                    <a href="ADMIN_TESTING.md" class="doc-link">
+                        <strong>ADMIN_TESTING.md</strong>
+                        <span class="badge badge-info">Testing</span>
+                        <br><small>Extended test scenarios</small>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <h3><i class="fa fa-file-text"></i> Invoice System</h3>
+                    <span class="role-badge role-admin">Admin</span>
+                    <span class="role-badge role-developer">Developer</span>
+                    
+                    <a href="INVOICE_FEATURES.md" class="doc-link">
+                        <strong>INVOICE_FEATURES.md</strong>
+                        <span class="badge badge-info">Features</span>
+                        <br><small>Invoice system capabilities</small>
+                    </a>
+                    
+                    <a href="INVOICE_IMPLEMENTATION_SUMMARY.md" class="doc-link">
+                        <strong>INVOICE_IMPLEMENTATION_SUMMARY.md</strong>
+                        <span class="badge badge-secondary">Technical</span>
+                        <br><small>Implementation details</small>
+                    </a>
+                    
+                    <a href="INVOICE_FIX_LOG.md" class="doc-link">
+                        <strong>INVOICE_FIX_LOG.md</strong>
+                        <span class="badge badge-secondary">Changelog</span>
+                        <br><small>Bug fixes and updates</small>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <h3><i class="fa fa-cubes"></i> Stock Management</h3>
+                    <span class="role-badge role-admin">Admin</span>
+                    <span class="role-badge role-developer">Developer</span>
+                    
+                    <a href="STOCK_TESTING.md" class="doc-link priority-medium">
+                        <strong>STOCK_TESTING.md</strong>
+                        <span class="badge badge-warning">Testing</span>
+                        <br><small>Stock validation test cases</small>
+                    </a>
+                    
+                    <a href="TEST_STOCK_ZERO.md" class="doc-link">
+                        <strong>TEST_STOCK_ZERO.md</strong>
+                        <span class="badge badge-info">Testing</span>
+                        <br><small>Zero stock scenarios</small>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <h3><i class="fa fa-shopping-cart"></i> Orders System</h3>
+                    <span class="role-badge role-admin">Admin</span>
+                    
+                    <a href="ORDERS_QUICK_START.md" class="doc-link">
+                        <strong>ORDERS_QUICK_START.md</strong>
+                        <span class="badge badge-success">Quick</span>
+                        <br><small>Fast orders system overview</small>
+                    </a>
+                    
+                    <a href="ORDERS_SETUP_GUIDE.md" class="doc-link">
+                        <strong>ORDERS_SETUP_GUIDE.md</strong>
+                        <span class="badge badge-info">Setup</span>
+                        <br><small>Orders system installation</small>
+                    </a>
+                    
+                    <a href="ORDERS_TESTING.md" class="doc-link">
+                        <strong>ORDERS_TESTING.md</strong>
+                        <span class="badge badge-info">Testing</span>
+                        <br><small>Order workflow tests</small>
+                    </a>
+                    
+                    <a href="ORDERS_FINAL_SUMMARY.md" class="doc-link">
+                        <strong>ORDERS_FINAL_SUMMARY.md</strong>
+                        <span class="badge badge-secondary">Summary</span>
+                        <br><small>Orders implementation summary</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="doc-card">
+                    <h3><i class="fa fa-flask"></i> Testing & Demo Files</h3>
+                    <span class="role-badge role-developer">Developer</span>
+                    <span class="role-badge role-all">QA</span>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="test_concurrency.php" class="doc-link priority-high">
+                                <strong>test_concurrency.php</strong>
+                                <span class="badge badge-danger">Run This!</span>
+                                <br><small>Automated concurrency test</small>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="concurrency_demo.html" class="doc-link priority-medium">
+                                <strong>concurrency_demo.html</strong>
+                                <span class="badge badge-warning">Visual</span>
+                                <br><small>Interactive demonstration</small>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="invoice_demo.php" class="doc-link">
+                                <strong>invoice_demo.php</strong>
+                                <span class="badge badge-info">Demo</span>
+                                <br><small>Invoice system demo</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="doc-card">
+                    <h3><i class="fa fa-wrench"></i> Technical & Troubleshooting</h3>
+                    <span class="role-badge role-developer">Developer</span>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="TROUBLESHOOTING.md" class="doc-link">
+                                <strong>TROUBLESHOOTING.md</strong>
+                                <span class="badge badge-warning">Help</span>
+                                <br><small>Common issues and fixes</small>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="SQL_ERROR_FIXES.md" class="doc-link">
+                                <strong>SQL_ERROR_FIXES.md</strong>
+                                <span class="badge badge-secondary">SQL</span>
+                                <br><small>Database error solutions</small>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="PHONE_ADDRESS_UPDATES.md" class="doc-link">
+                                <strong>PHONE_ADDRESS_UPDATES.md</strong>
+                                <span class="badge badge-secondary">Updates</span>
+                                <br><small>Delivery info implementation</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="doc-card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+                    <h3><i class="fa fa-lightbulb-o"></i> Recommended Reading Path</h3>
+                    
+                    <div class="alert alert-warning mb-3">
+                        <strong>New to Fresh Mart?</strong> Follow this path:
+                    </div>
+                    
+                    <ol style="font-size: 1.1rem; line-height: 2;">
+                        <li><strong>START_HERE.md</strong> - Choose your role (2 min)</li>
+                        <li><strong>QUICK_START_GUIDE.md</strong> - Setup system (10 min)</li>
+                        <li><strong>ONE_PAGE_REFERENCE.md</strong> - Print for desk (5 min)</li>
+                        <li><strong>USER_MANUAL_SOP.md</strong> - Complete reference (30 min)</li>
+                        <li><strong>Role-specific docs</strong> - Based on your role (varies)</li>
+                    </ol>
+                    
+                    <p class="mb-0"><strong>Total Time:</strong> ~1 hour to full understanding</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="doc-card" style="border-top: 4px solid #3b82f6;">
+                    <h3><i class="fa fa-users"></i> For Customers</h3>
+                    <span class="role-badge role-customer">Customer</span>
+                    
+                    <p><strong>Essential Reading:</strong></p>
+                    <ul>
+                        <li>USER_MANUAL_SOP.md - Section 3</li>
+                        <li>ONE_PAGE_REFERENCE.md</li>
+                    </ul>
+                    
+                    <p><strong>Learn How To:</strong></p>
+                    <ul>
+                        <li>Register and login</li>
+                        <li>Browse products</li>
+                        <li>Add to cart</li>
+                        <li>Place orders</li>
+                        <li>View invoices</li>
+                    </ul>
+                    
+                    <a href="USER_MANUAL_SOP.md#3-customer-operations" class="btn btn-primary btn-block">
+                        <i class="fa fa-arrow-right"></i> Read Customer Guide
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="doc-card" style="border-top: 4px solid #f59e0b;">
+                    <h3><i class="fa fa-user-shield"></i> For Admins</h3>
+                    <span class="role-badge role-admin">Admin</span>
+                    
+                    <p><strong>Essential Reading:</strong></p>
+                    <ul>
+                        <li>ADMIN_SETUP_GUIDE.md</li>
+                        <li>USER_MANUAL_SOP.md - Sections 4, 5, 6</li>
+                        <li>ADMIN_TEST_FLOWS.md</li>
+                    </ul>
+                    
+                    <p><strong>Learn How To:</strong></p>
+                    <ul>
+                        <li>Manage products</li>
+                        <li>Process orders</li>
+                        <li>Monitor stock</li>
+                        <li>Generate reports</li>
+                    </ul>
+                    
+                    <a href="ADMIN_SETUP_GUIDE.md" class="btn btn-warning btn-block">
+                        <i class="fa fa-arrow-right"></i> Read Admin Guide
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="doc-card" style="border-top: 4px solid #10b981;">
+                    <h3><i class="fa fa-code"></i> For Developers</h3>
+                    <span class="role-badge role-developer">Developer</span>
+                    
+                    <p><strong>Essential Reading:</strong></p>
+                    <ul>
+                        <li>CONCURRENCY_QUICK_REFERENCE.md ⭐⭐⭐</li>
+                        <li>CONCURRENCY_CONTROL.md ⭐⭐⭐</li>
+                        <li>TRANSACTION_FLOW_DIAGRAM.md</li>
+                    </ul>
+                    
+                    <p><strong>Learn About:</strong></p>
+                    <ul>
+                        <li>Transaction control</li>
+                        <li>Row-level locking</li>
+                        <li>Race condition prevention</li>
+                        <li>System architecture</li>
+                    </ul>
+                    
+                    <a href="CONCURRENCY_QUICK_REFERENCE.md" class="btn btn-success btn-block">
+                        <i class="fa fa-arrow-right"></i> Read Technical Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="doc-card" style="background: #1f2937; color: white;">
+                    <h3 style="color: white;"><i class="fa fa-terminal"></i> Database Files</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="color: #10b981;">Main Schema</h5>
+                            <p><code>onlinesale.sql</code><br>
+                            <small>Products, users, cart tables</small></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 style="color: #10b981;">Orders System</h5>
+                            <p><code>create_orders_tables.sql</code><br>
+                            <small>Orders and order_items tables</small></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 style="color: #10b981;">Admin Panel</h5>
+                            <p><code>admin_setup.sql</code><br>
+                            <small>Admin accounts and permissions</small></p>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-light mt-3">
+                        <strong>Import Order:</strong> onlinesale.sql → create_orders_tables.sql → admin_setup.sql
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="doc-card" style="background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white;">
+                    <h3 style="color: white;"><i class="fa fa-question-circle"></i> Need Help?</h3>
+                    
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <i class="fa fa-search" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <h5>Can't Find Something?</h5>
+                            <p><a href="DOCUMENTATION_INDEX.md" style="color: white; text-decoration: underline;">Check Documentation Index</a></p>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-bug" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <h5>Having Issues?</h5>
+                            <p><a href="USER_MANUAL_SOP.md#8-troubleshooting" style="color: white; text-decoration: underline;">Troubleshooting Guide</a></p>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-graduation-cap" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <h5>Need Training?</h5>
+                            <p><a href="START_HERE.md" style="color: white; text-decoration: underline;">Learning Path</a></p>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-phone" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <h5>Contact Support</h5>
+                            <p style="font-weight: 600;">+91 9360509515</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p style="color: white; font-size: 0.9rem;">
+                <i class="fa fa-copyright"></i> 2026 Fresh Mart. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

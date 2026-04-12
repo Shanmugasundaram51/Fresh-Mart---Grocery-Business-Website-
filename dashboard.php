@@ -206,6 +206,66 @@ $orders_result = mysqli_query($con, $orders_query);
             box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
         }
         
+        .btn-invoice-view {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn-invoice-view:hover {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+            color: #1e3a8a;
+            border-color: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-invoice-download {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            color: #6b21a8;
+            border: 2px solid #a855f7;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(168, 85, 247, 0.2);
+        }
+        
+        .btn-invoice-download:hover {
+            background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+            color: #581c87;
+            border-color: #9333ea;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(168, 85, 247, 0.3);
+        }
+        
+        .btn-order-details {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            border: 2px solid #f59e0b;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
+        }
+        
+        .btn-order-details:hover {
+            background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+            color: #78350f;
+            border-color: #d97706;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3);
+        }
+        
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -371,14 +431,14 @@ $orders_result = mysqli_query($con, $orders_query);
                         <?php endif; ?>
                         
                         <div class="order-actions mt-3">
-                            <a href="view_invoice.php?order_id=<?php echo $order['id']; ?>" class="btn btn-view">
-                                <i class="fa fa-file-text"></i> View Invoice
+                            <a href="view_invoice.php?order_id=<?php echo $order['id']; ?>" class="btn btn-invoice-view">
+                                <i class="fa fa-file-text-o"></i> View Invoice Details
                             </a>
-                            <a href="generate_invoice.php?order_id=<?php echo $order['id']; ?>" class="btn btn-view">
-                                <i class="fa fa-download"></i> Download PDF
+                            <a href="generate_invoice.php?order_id=<?php echo $order['id']; ?>" class="btn btn-invoice-download">
+                                <i class="fa fa-download"></i> Download Invoice PDF
                             </a>
-                            <button onclick="viewOrderDetails(<?php echo $order['id']; ?>)" class="btn btn-view">
-                                <i class="fa fa-info-circle"></i> Order Details
+                            <button onclick="viewOrderDetails(<?php echo $order['id']; ?>)" class="btn btn-order-details">
+                                <i class="fa fa-list-alt"></i> Order Details
                             </button>
                         </div>
                     </div>

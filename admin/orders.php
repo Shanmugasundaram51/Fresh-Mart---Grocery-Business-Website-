@@ -140,7 +140,8 @@ $orders = get_all_orders($filter, $time_filter);
                                         <th>Items</th>
                                         <th>Total</th>
                                         <th>Status</th>
-                                        <th>Payment</th>
+                                        <th>Payment Status</th>
+                                        <th>Payment Method</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -167,6 +168,24 @@ $orders = get_all_orders($filter, $time_filter);
                                                 $items_count = $items_row['count'];
                                             }
                                             
+                                            $payment_method_icon = '';
+                                            $payment_method_badge_class = 'badge-secondary';
+                                            switch($order['payment_method']) {
+                                                case 'Cash on Delivery':
+                                                    $payment_method_icon = '<i class="fa fa-money"></i> ';
+                                                    $payment_method_badge_class = 'badge-warning';
+                                                    break;
+                                                case 'UPI':
+                                                    $payment_method_icon = '<i class="fa fa-mobile"></i> ';
+                                                    $payment_method_badge_class = 'badge-info';
+                                                    break;
+                                                case 'Credit Card':
+                                                case 'Debit Card':
+                                                    $payment_method_icon = '<i class="fa fa-credit-card"></i> ';
+                                                    $payment_method_badge_class = 'badge-primary';
+                                                    break;
+                                            }
+                                            
                                             echo '<tr>';
                                             echo '<td><strong>' . htmlspecialchars($order['order_number']) . '</strong></td>';
                                             echo '<td>' . htmlspecialchars($order['first_name'] . ' ' . $order['last_name']) . '<br><small class="text-muted">' . htmlspecialchars($order['email_id']) . '</small></td>';
@@ -179,15 +198,16 @@ $orders = get_all_orders($filter, $time_filter);
                                             echo '</td>';
                                             echo '<td><span class="badge badge-' . $status_class . '">' . $order['order_status'] . '</span></td>';
                                             echo '<td><span class="badge badge-' . $payment_class . '">' . $order['payment_status'] . '</span></td>';
+                                            echo '<td><span class="badge ' . $payment_method_badge_class . '">' . $payment_method_icon . htmlspecialchars($order['payment_method']) . '</span></td>';
                                             echo '<td class="table-actions">';
                                             echo '<a href="order_details.php?id=' . $order['id'] . '" class="btn btn-sm btn-info mb-1" title="View Details"><i class="fa fa-eye"></i></a> ';
-                                            echo '<a href="../view_invoice.php?order_id=' . $order['id'] . '" class="btn btn-sm btn-success mb-1" title="View Invoice" target="_blank"><i class="fa fa-file-text"></i></a> ';
-                                            echo '<a href="../generate_invoice.php?order_id=' . $order['id'] . '" class="btn btn-sm btn-primary mb-1" title="Download PDF Invoice"><i class="fa fa-download"></i></a>';
+                                            echo '<a href="../view_invoice.php?order_id=' . $order['id'] . '" class="btn btn-sm btn-success mb-1" title="View Invoice Details" target="_blank"><i class="fa fa-file-text"></i></a> ';
+                                            echo '<a href="../generate_invoice.php?order_id=' . $order['id'] . '" class="btn btn-sm btn-primary mb-1" title="Download Invoice PDF"><i class="fa fa-download"></i></a>';
                                             echo '</td>';
                                             echo '</tr>';
                                         }
                                     } else {
-                                        echo '<tr><td colspan="8" class="text-center">No orders found</td></tr>';
+                                        echo '<tr><td colspan="9" class="text-center">No orders found</td></tr>';
                                     }
                                     ?>
                                 </tbody>

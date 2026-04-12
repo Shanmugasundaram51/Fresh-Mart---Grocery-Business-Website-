@@ -133,7 +133,7 @@ if (!$order) {
                                 <p><strong>Name:</strong><br><?php echo htmlspecialchars($order['first_name'] . ' ' . $order['last_name']); ?></p>
                                 <p><strong>Email:</strong><br><?php echo htmlspecialchars($order['email_id']); ?></p>
                                 <p><strong>Phone:</strong><br><?php 
-                                    $phone = $order['phone'] ? $order['phone'] : ($order['delivery_phone'] ? $order['delivery_phone'] : 'N/A');
+                                    $phone = $order['delivery_phone'] ? $order['delivery_phone'] : ($order['registered_phone'] ? $order['registered_phone'] : 'N/A');
                                     echo htmlspecialchars($phone); 
                                 ?></p>
                                 <?php if ($order['delivery_address']) { ?>

@@ -1,7 +1,7 @@
 <?php
 function get_all_orders($filter = null, $time_filter = null) {
     global $con;
-    $query = "SELECT o.*, u.first_name, u.last_name, u.email_id 
+    $query = "SELECT o.*, u.first_name, u.last_name, u.email_id, u.phone as registered_phone 
               FROM orders o 
               INNER JOIN users u ON o.user_id = u.id ";
     
@@ -46,7 +46,7 @@ function get_order_with_items($order_id) {
     global $con;
     $order_id = mysqli_real_escape_string($con, $order_id);
     
-    $order_query = "SELECT o.*, u.first_name, u.last_name, u.email_id, u.phone 
+    $order_query = "SELECT o.*, u.first_name, u.last_name, u.email_id, u.phone as registered_phone 
                     FROM orders o 
                     INNER JOIN users u ON o.user_id = u.id 
                     WHERE o.id='$order_id'";

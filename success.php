@@ -61,10 +61,10 @@ include 'includes/header_menu.php';
                               
                               echo '<div class="mt-4">';
                               echo '<a href="view_invoice.php?order_id=' . $order['id'] . '" class="btn btn-success btn-lg mr-2" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; padding: 12px 30px; font-weight: 600; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);">';
-                              echo '<i class="fa fa-file-text"></i> View Invoice';
+                              echo '<i class="fa fa-file-text"></i> View Invoice Details';
                               echo '</a>';
                               echo '<a href="generate_invoice.php?order_id=' . $order['id'] . '" class="btn btn-success btn-lg" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); border: none; padding: 12px 30px; font-weight: 600; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);">';
-                              echo '<i class="fa fa-download"></i> Download PDF';
+                              echo '<i class="fa fa-download"></i> Download Invoice PDF';
                               echo '</a>';
                               echo '</div>';
                           }
